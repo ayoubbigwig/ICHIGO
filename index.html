@@ -191,46 +191,69 @@
 
     <p>Dear kaoutar, I want to take a moment to wish you the happiest birthday! 🎉 You have a heart of gold. May your day be filled with endless joy, laughter, and love. You mean the world to me, and I hope this year brings you nothing but happiness and success. Always remember how cherished you are. 💖</p>
 
-    <!-- BOUTON DE MUSIQUE ET AUDIO -->
-    <button id="playMusicButton" style="
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
+<!-- BOUTONS MUSIQUE -->
+<div style="
+    position: movePlayButton ;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 1000;
+">
+<button id="playMusicButton" style="
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-family: 'Pacifico', cursive;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    cursor: pointer;
+    display: none;
+    animation: movePlayButton 2s infinite ease-in-out;
+">Play</button>
+
+    <button id="pauseMusicButton" style="
         padding: 10px 20px;
         font-size: 1rem;
         font-family: 'Pacifico', cursive;
-        background-color: #ff69b4;
+        background-color: #f44336;
         color: white;
         border: none;
         border-radius: 20px;
         box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         cursor: pointer;
-        z-index: 1000;
-        display: none;
-    ">Play Music</button>
+        
+    ">Pause</button>
+</div>
 
-    <audio id="backgroundMusic" autoplay loop>
-        <source src="11.mp3" type="audio/mpeg">
-        Votre navigateur ne supporte pas l'élément audio.
-    </audio>
-
+<audio id="backgroundMusic" autoplay loop>
+    <source src="11.mp3" type="audio/mpeg">
+</audio>
     <script>
         const music = document.getElementById('backgroundMusic');
-        const playBtn = document.getElementById('playMusicButton');
+const playBtn = document.getElementById('playMusicButton');
+const pauseBtn = document.getElementById('pauseMusicButton');
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const tryPlay = music.play();
-            if (tryPlay !== undefined) {
-                tryPlay.catch(() => {
-                    playBtn.style.display = 'block';
-                });
-            }
+document.addEventListener('DOMContentLoaded', () => {
+    const tryPlay = music.play();
+    if (tryPlay !== undefined) {
+        tryPlay.catch(() => {
+            playBtn.style.display = 'block';
         });
+    }
+});
 
-        playBtn.addEventListener('click', () => {
-            music.play();
-            playBtn.style.display = 'none';
-        });
+playBtn.addEventListener('click', () => {
+    music.play();
+    playBtn.style.display = 'none';
+});
+
+pauseBtn.addEventListener('click', () => {
+    music.pause();
+    playBtn.style.display = 'inline-block';
+});
 
         const createShape = (type) => {
             const shape = document.createElement('div');
