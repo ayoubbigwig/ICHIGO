@@ -188,11 +188,118 @@
 </head>
 <body>
     <h1>Happy Birthday kaoutar!</h1>
+
     <p>Dear kaoutar, I want to take a moment to wish you the happiest birthday! 🎉 You have a heart of gold. May your day be filled with endless joy, laughter, and love. You mean the world to me, and I hope this year brings you nothing but happiness and success. Always remember how cherished you are. 💖</p>
 
-    <audio id="birthdayMusic" autoplay loop>
-    <source src="11.mp3" type="audio/mpeg">
-  </audio>
+    <!-- BOUTON DE MUSIQUE ET AUDIO -->
+    <button id="playMusicButton" style="
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-family: 'Pacifico', cursive;
+        background-color: #ff69b4;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        cursor: pointer;
+        z-index: 1000;
+        display: none;
+    ">Play Music</button>
+
+    <audio id="backgroundMusic" autoplay loop>
+        <source src="11.mp3" type="audio/mpeg">
+        Votre navigateur ne supporte pas l'élément audio.
+    </audio>
+
+    <script>
+        const music = document.getElementById('backgroundMusic');
+        const playBtn = document.getElementById('playMusicButton');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const tryPlay = music.play();
+            if (tryPlay !== undefined) {
+                tryPlay.catch(() => {
+                    playBtn.style.display = 'block';
+                });
+            }
+        });
+
+        playBtn.addEventListener('click', () => {
+            music.play();
+            playBtn.style.display = 'none';
+        });
+
+        const createShape = (type) => {
+            const shape = document.createElement('div');
+            shape.classList.add('shape', type);
+            shape.style.left = `${Math.random() * 100}vw`;
+            shape.style.animationDuration = `${Math.random() * 3 + 6}s`;
+            document.body.appendChild(shape);
+        };
+
+        const createPhoto = (src, className, animationName) => {
+            const photo = document.createElement('img');
+            photo.classList.add('photo', className);
+            photo.src = src;
+            photo.style.left = `${Math.random() * 100}vw`;
+            photo.style.top = `${Math.random() * 100}vh`;
+            photo.style.animation = `${animationName} 10s infinite linear`;
+            photo.draggable = true;
+            photo.addEventListener('mousedown', (e) => {
+                const onMouseMove = (e) => {
+                    photo.style.left = `${e.pageX - photo.width / 2}px`;
+                    photo.style.top = `${e.pageY - photo.height / 2}px`;
+                };
+                document.addEventListener('mousemove', onMouseMove);
+                document.addEventListener('mouseup', () => {
+                    document.removeEventListener('mousemove', onMouseMove);
+                }, { once: true });
+            });
+            document.body.appendChild(photo);
+        };
+
+        const createSparkle = () => {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            sparkle.style.left = `${Math.random() * 100}vw`;
+            sparkle.style.top = `${Math.random() * 100}vh`;
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 3000);
+        };
+
+        const photoUrls = [
+            'photo1.jpg',
+            'photo2.jpg',
+            'photo3.jpg',
+        ];
+
+        const photoClasses = ['photo1', 'photo2', 'photo3'];
+
+        for (let i = 0; i < 7; i++) {
+            createShape('heart');
+            createShape('star');
+        }
+
+        photoUrls.forEach((url, index) => {
+            createPhoto(url, photoClasses[index], `moveRandomly${index + 1}`);
+        });
+
+        setInterval(createSparkle, 500);
+
+        document.addEventListener('mousemove', (e) => {
+            const trail = document.createElement('div');
+            trail.classList.add('trail');
+            trail.style.left = `${e.pageX}px`;
+            trail.style.top = `${e.pageY}px`;
+            document.body.appendChild(trail);
+            setTimeout(() => trail.remove(), 500);
+        });
+    </script>
+</body>
+</html>
     <script>
         const createShape = (type) => {
             const shape = document.createElement('div');
