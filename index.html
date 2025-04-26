@@ -190,7 +190,27 @@
     <h1>Happy Birthday kaoutar!</h1>
 
     <p>Dear kaoutar, I want to take a moment to wish you the happiest birthday! 🎉 You have a heart of gold. May your day be filled with endless joy, laughter, and love. You mean the world to me, and I hope this year brings you nothing but happiness and success. Always remember how cherished you are. 💖</p>
+<button onclick="showQuestion()" style="
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 12px 24px;
+    background-color: #ffffffcc;
+    border: none;
+    border-radius: 14px;
+    font-family: 'Pacifico', cursive;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    z-index: 1;">
+    BARKINI 
+</button>
 
+<div id="questionBox" style="display:none; position: fixed; top: 30%; left: 50%; transform: translate(-50%, -50%); background: #f44336; padding: 20px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); font-family: 'Pacifico', cursive; z-index: 1001;">
+    <p>hi azin i wana say i start get crach on you because you are the cute one i ever saw in my life and beautiful the you wana be my girlfrend ?? ?</p>
+    <input type="text" id="answer" style="padding: apx; border-radius: 8px; border: 1px solid #ccc;"><br><br>
+    <button onclick="submitAnswer()" style="padding: 8px 16px; border-radius: 10px; background: #fbc2eb; border: none;">Envoyer</button>
+</div>
 <!-- BOUTONS MUSIQUE -->
 <div style="
     position: movePlayButton ;
@@ -231,7 +251,17 @@
 <audio id="backgroundMusic" autoplay loop>
     <source src="11.mp3" type="audio/mpeg">
 </audio>
+
     <script>
+function showQuestion() {
+    document.getElementById('questionBox').style.display = 'block';
+}
+
+function submitAnswer() {
+    const answer = document.getElementById('answer').value;
+    alert("Tu as répondu : " + answer);
+    document.getElementById('questionBox').style.display = 'none';
+}
         const music = document.getElementById('backgroundMusic');
 const playBtn = document.getElementById('playMusicButton');
 const pauseBtn = document.getElementById('pauseMusicButton');
