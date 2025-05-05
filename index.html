@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>I Love You Animation Loop</title>
+  <title>I Love You Animation</title>
   <script src="https://cdn.jsdelivr.net/npm/@mojs/core"></script>
   <style>
     body {
@@ -67,63 +67,50 @@
   const heart = document.getElementById("heart");
   const loveText = document.getElementById("loveText");
 
-  function playAnimation() {
-    // Reset states
-    heart.style.opacity = 0;
-    loveText.style.opacity = 0;
-    loveText.style.transform = 'translateY(20px)';
+  const pulse = new mojs.Html({
+    el: '#heart',
+    duration: 800,
+    scale: { 0: 1.5 },
+    easing: 'elastic.out',
+    repeat: 1,
+    isYoyo: true,
+  });
 
-    const pulse = new mojs.Html({
-      el: '#heart',
-      duration: 800,
-      scale: { 0: 1.5 },
-      easing: 'elastic.out',
-      repeat: 1,
-      isYoyo: true,
-    });
+  const burst = new mojs.Burst({
+    left: 0, top: 0,
+    parent: '#heart',
+    radius:   { 0: 50 },
+    count:    8,
+    children: {
+      shape:        'circle',
+      radius:       8,
+      fill:         'white',
+      strokeWidth:  2,
+      duration:     1000,
+      easing:       'cubic.out'
+    }
+  });
 
-    const burst = new mojs.Burst({
-      left: 0, top: 0,
-      parent: '#heart',
-      radius: { 0: 50 },
-      count: 8,
-      children: {
-        shape: 'circle',
-        radius: 8,
-        fill: 'white',
-        strokeWidth: 2,
-        duration: 1000,
-        easing: 'cubic.out'
-      }
-    });
+  const showHeart = new mojs.Tween({
+    duration: 100,
+    onStart: () => {
+      heart.style.opacity = 1;
+    },
+    onComplete: () => {
+      pulse.play();
+      burst.tune({ x: heart.offsetLeft + 20, y: heart.offsetTop + 20 }).play();
 
-    const showHeart = new mojs.Tween({
-      duration: 100,
-      onStart: () => {
-        heart.style.opacity = 1;
-      },
-      onComplete: () => {
-        pulse.play();
-        burst.tune({ x: heart.offsetLeft + 20, y: heart.offsetTop + 20 }).play();
+      setTimeout(() => {
+        heart.style.opacity = 0;
+        loveText.style.opacity = 1;
+        loveText.style.transform = 'translateY(0)';
+      }, 1000);
+    }
+  });
 
-        setTimeout(() => {
-          heart.style.opacity = 0;
-          loveText.style.opacity = 1;
-          loveText.style.transform = 'translateY(0)';
-        }, 1000);
-      }
-    });
-
-    const timeline = new mojs.Timeline();
-    timeline.add(showHeart);
-    timeline.play();
-  }
-
-  // First run
-  playAnimation();
-
-  // Repeat every 3.5 seconds
-  setInterval(playAnimation, 3500);
+  const timeline = new mojs.Timeline();
+  timeline.add(showHeart);
+  timeline.play();
 </script>
 
 </body>
